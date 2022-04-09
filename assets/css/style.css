@@ -4,3 +4,14 @@
   color: white;
   text-align: center;
 }
+
+.btn {
+  font-size: 1.3rem;
+  background-color: rgb(120, 167, 255);
+  display: block;
+  padding: 6px 5px;
+  color: white;
+  margin: 5px 0;
+  border-radius: 0.3rem;
+  box-shadow: 3px 3px;
+}
