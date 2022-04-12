@@ -58,28 +58,64 @@ var displayWeather = function(weatherDisplaying) {
     currentDate.textContent = " (" + moment().format("MM D, YYYY h:mm a") + ") ";
     currentCity.appendChild(currentDate);
 
+    // display icon for the weather
+    var image = document.createElement('img');
+    image.src = 
+    currentCity.appendChild(image);
+
     // create span to include temperature data
     var temperatureEl = document.createElement("span");
     temperatureEl.textContent = "Temperature: " + weatherDisplaying.main.temp + " °F";
     weatherDetailContainer.appendChild(temperatureEl);
 
-    // // display icon for the weather
-    // var image = document.createElement('img');
-    // image.src = 
-    // currentCity.appendChild(image);
-
-    // display the wind
-    var windEl = document.createElement("span");
-    windEl.textContent = "Wind: " + weatherDisplaying.wind.speed + " MPH";
-    weatherDetailContainer.appendChild(windEl);
-
-    // display humidity
+    // display the humidity
     var humidityEl = document.createElement("span");
     humidityEl.textContent = "Humidity: " + weatherDisplaying.main.humidity + " %";
     weatherDetailContainer.appendChild(humidityEl);
 
-    // lateral and longitude values displaying for the uvIndex function
+    // display the wind speed
+    var windEl = document.createElement("span");
+    windEl.textContent = "Wind: " + weatherDisplaying.wind.speed + " MPH";
+    weatherDetailContainer.appendChild(windEl);
+
+    // display the UV index
     var lat = weatherResults.coord.lat;
     var long = weatherResults.coord.lon;
     uvIndex(lat, lon);
+}
+
+var uvIndex = function(lat, lon) {
+    var apiKey = "fb391254eaf5ba6d50837043f03d0791";
+    // api url for the uv index function
+    var apiUrl = ``
+
+    //make request to url
+    fetch(apiUrl).then(function(response){
+        response.json().then(function(data){
+            displayUvIndex(data);
+        });
+    });
+    console.log(lon);
+    console.log(lat);
+}
+
+var displayUvIndex = function(index) {
+    var uvIndexEl = document.createElement("div");
+    uvIndexEl.textContent = "UV Index: ";
+
+    uvIndexValue = document.createElement("span");
+    uvIndexValue.textContent = index.value;
+
+    // change colors of UV index depending on the value/status of the city
+    if(index.value <=2) {
+        uvIndexValue.style.backgroundColor = "green";
+    } else if(index.value > 2 && index.value<=8){
+        uvIndexValue.style.backgroundColor = "yellow";
+    } else if(index.value >8){
+        uvIndexValue.style.backgroundColor = "red";
+    };
+
+    // append uv index values to the weather container
+    uvIndexEl.appendChild(uvIndexValue);
+    weatherDetailContainer.appendChild(uvIndexEl);
 }
