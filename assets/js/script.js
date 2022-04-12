@@ -13,7 +13,7 @@ var formSubmitHandler = function(event){
   
     var city = cityInputEl.value.trim();
     if (city){
-        getCityWeather(city);
+        getWeather(city);
         fiveDayForecast(city);
         cities.unshift({city});
         
@@ -30,7 +30,7 @@ var saveSearch = function(){
     localStorage.setItem("cities", JSON.stringify(cities));
 };
 
-var getCityWeather = function(city) {
+var getWeather = function(city) {
     // api key to weather api
     var apiKey = "fb391254eaf5ba6d50837043f03d0791";
       // format the api
@@ -41,11 +41,11 @@ var getCityWeather = function(city) {
         .then(response => response.json())
         .then(data => { 
             console.log(data)
-            displayCityWeather(data);
+            displayWeather(data);
         });
 };
 
-var displayCityWeather = function(weatherDisplaying) {
+var displayWeather = function(weatherDisplaying) {
     weatherDetailContainer.textContent= "";  
 
     //display the city
@@ -60,7 +60,7 @@ var displayCityWeather = function(weatherDisplaying) {
 
     //display icon for the weather
    var weatherImage = document.createElement('img');
-   image.src = ` http://openweathermap.org/img/wn/${weatherDisplaying.weather[0].icon}@2x.png`
+   weatherImage.src = ` http://openweathermap.org/img/wn/${weatherDisplaying.weather[0].icon}@2x.png`
    currentCity.appendChild(weatherImage);
 
     // display the temperature data
