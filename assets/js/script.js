@@ -48,32 +48,32 @@ var getWeather = function(city) {
 var displayWeather = function(weatherDisplaying) {
     weatherDetailContainer.textContent= "";  
 
-    //display the city
+    //display the city that was looked for
     var currentCity = document.createElement('h2');
     currentCity.textContent = weatherDisplaying.name;
     weatherDetailContainer.appendChild(currentCity);
 
-    //display actual date
+    //displays the actual date
     var currentDate = document.createElement("span")
     currentDate.textContent = " (" + moment().format("MMM D, YYYY h:mm a") + ") ";
     currentCity.appendChild(currentDate);
 
-    //display icon for the weather
+    //displays icon for the weather
    var weatherImage = document.createElement('img');
    weatherImage.src = ` http://openweathermap.org/img/wn/${weatherDisplaying.weather[0].icon}@2x.png`
    currentCity.appendChild(weatherImage);
 
-    // display the temperature data
+    // displays the temperature data
    var temperatureEl = document.createElement("span");
    temperatureEl.textContent = "Temperature: " + weatherDisplaying.main.temp + " °F";
    weatherDetailContainer.appendChild(temperatureEl);
 
-   //display humidity
+   //displays the humidity
    var humidityEl = document.createElement('span');
    humidityEl.textContent = "Humidity: " + weatherDisplaying.main.humidity + " %";
    weatherDetailContainer.appendChild(humidityEl);
 
-   //display the wind speed
+   //displays the wind speed
    var windEl = document.createElement('span');
    windEl.textContent = "Wind: " + weatherDisplaying.wind.speed + " MPH";
    weatherDetailContainer.appendChild(windEl);
@@ -84,6 +84,7 @@ var displayWeather = function(weatherDisplaying) {
    uvIndex(lat,lon);
 }
 
+// adding uvIndex function
 var uvIndex = function(lat, lon) {
     var apiKey = "fb391254eaf5ba6d50837043f03d0791";
     // api url for uv index
@@ -105,7 +106,7 @@ var displayUvIndex = function(index) {
     uvIndexValue = document.createElement("span");
     uvIndexValue.textContent = index.value;
 
-// change colors of UV index depending on the values/status of the city
+// change colors of UV index depending if the conditions are favorable, moderate or severe
     if(index.value <=2){
         uvIndexValue.style.backgroundColor = "green";
     }else if(index.value >2 && index.value<=8){
@@ -119,7 +120,7 @@ var displayUvIndex = function(index) {
     weatherDetailContainer.appendChild(uvIndexEl);
 }
 
-// create var for the 5 day forecast
+// create var for the 5-day forecast / future weather conditions
 
 var fiveDayForecast = function(city) {
     forecastContainerEl.textContent = ""
@@ -162,7 +163,7 @@ var displayFiveDayForecast = function(weatherDisplaying) {
         forecastTemperature.classList = "card-body";
         forecastEl.appendChild(forecastTemperature);
 
-        //display the wind for the 5 days
+        //display the wind speed for the 5 days
         var forecastWind = document.createElement('span');
         forecastWind.textContent = "Wind: " + everydayForecast.wind.speed + " MPH";
         forecastWind.classList = "card-body";
